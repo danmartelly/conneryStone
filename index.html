@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame
+		Remove this if you use the .htaccess -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+		<title>Official Roshetta Shtone® - Learning to shpeak like Sean Connery</title>
+		<meta name="description" content="" />
+		<meta name="author" content="martelly" />
+
+		<meta name="viewport" content="width=device-width; initial-scale=1.0" />
+
+		<!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		
+		<script type="text/javascript" src="jquery-1.9.0.min.js"></script>
+		<script type="text/javascript" src="levelText.js"></script>
+		<script type="text/javascript">
+
+			//This script extracts parameters from the URL
+			//from jquery-howto.blogspot.com
+			
+		    $.extend({
+		        getUrlVars : function() {
+		            var vars = [], hash;
+		            var hashes = window.location.href.slice(
+		                    window.location.href.indexOf('?') + 1).split('&');
+		            for ( var i = 0; i < hashes.length; i++) {
+		                hash = hashes[i].split('=');
+		                vars.push(hash[0]);
+		                vars[hash[0]] = hash[1];
+		            }
+		            return vars;
+		        },
+		        getUrlVar : function(name) {
+		            return $.getUrlVars()[name];
+		        }
+		    });
+		    // This allows the Javascript code inside this block to only run when the page
+		    // has finished loading in the browser.
+		    $(document).ready(function() {
+				var level = 1;
+				
+		        if ($.getUrlVar('level')) {
+		            level = $.getUrlVar('level');
+		        }
+		        console.log(text[1]);
+		        
+		        var prefix = "l" + level;
+		        var topLeftSrc = prefix + "topleft";
+		        var topRightSrc = prefix + "topright";
+		        var bottomLeftSrc = prefix + "bottomleft";
+		        var bottomRightSrc = prefix + "bottomright";
+		        var audioSrc = prefix + "audio";
+		        
+		        $("#topLeftImage").attr("src", topLeftSrc);
+		        $("#topRightImage").attr("src", topRightSrc);
+		        $("#bottomLeftImage").attr("src", bottomLeftSrc);
+		        $("#bottomRightImage").attr("src", bottomRightSrc);
+		        
+		        $("#rosettaText").html(text[level]);
+		        
+		        var nextLevel = parseInt(level, 10) + 1;
+		        var url = window.location.host + window.location.pathname;
+		        $("#nextLevelLink").attr("href","index.html?level=" + nextLevel);
+			});
+    	</script>
+	</head>
+
+	<body>
+		<div>
+			<p id="rosettaText">Placeholder</p>
+			<img id="topLeftImage" src="pictures/picturePlaceholder.png" />
+			<img id="topRightImage" src="pictures/picturePlaceholder.png" />
+			<img id="bottomLeftImage" src="pictures/picturePlaceholder.png" />
+			<img id="bottomRightImage" src="pictures/picturePlaceholder.png" />
+			<a href="" id="nextLevelLink">Next Lesson</a>
+		</div>
+	</body>
+</html>
