@@ -1,32 +1,79 @@
 body {
-	background-image:url('pictures/2nBGT.png');
-	background-repeat:no-repeat;
 	background-color:#cccccc;
-	background-position:center top;
 }
 
 #topLeftImage {
-	margin-left:auto;
-	margin-right:auto;
-	position:relative;
-	top:100px;
+	position:absolute;
+	top:166px;
+	left:190px;
+}
+
+.feedbackTopLeft {
+	position:absolute;
+	top:225px;
+	left:290px;
 }
 
 #topRightImage {
-	position:relative;
-	top:100px;
+	position:absolute;
+	top:166px;
+	left:437px;
+}
+
+.feedbackTopRight {
+	position:absolute;
+	top:225px;
+	left:537px;
 }
 
 #bottomLeftImage {
-	position:relative;
-	top:300px;	
+	position:absolute;
+	top:394px;
+	left:190px;	
+}
+
+.feedbackBottomLeft {
+	position:absolute;
+	top:464px;
+	left:290px;	
 }
 
 #bottomRightImage {
-	position:relative;
-	top:300px;	
+	position:absolute;
+	top:394px;
+	left:437px;	
+}
+
+.feedbackBottomRight {
+	position:absolute;
+	top:464px;
+	left:537px;	
+}
+
+.feedbackPicture {
+	visibility:hidden;
+}
+
+#backgroundImage {
+	position:absolute;
+	top: 30px;
+	left: 30px;
+	z-index:-1;
+}
+
+#replayButton {
+	position:absolute;
+	top:85px;
+	left:515px;
+}
+
+#nextLevelLink {
+	text-align:right;
 }
 
 #rosettaText {
-	font-family:"Trebuchet MS"
+	font-family:"Trebuchet MS";
+	position: absolute;
+	top: 70px;
+	left:320px;
 }

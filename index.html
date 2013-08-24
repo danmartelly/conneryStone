@@ -40,6 +40,12 @@
 		            return $.getUrlVars()[name];
 		        }
 		    });
+		    
+		    function replay() {
+				var song = document.getElementById('currentAudio');
+				song.currentTime = 0;
+				song.play();
+			}
 		    // This allows the Javascript code inside this block to only run when the page
 		    // has finished loading in the browser.
 		    $(document).ready(function() {
@@ -48,36 +54,128 @@
 		        if ($.getUrlVar('level')) {
 		            level = $.getUrlVar('level');
 		        }
-		        console.log(text[1]);
 		        
-		        var prefix = "l" + level;
-		        var topLeftSrc = prefix + "topleft";
-		        var topRightSrc = prefix + "topright";
-		        var bottomLeftSrc = prefix + "bottomleft";
-		        var bottomRightSrc = prefix + "bottomright";
-		        var audioSrc = prefix + "audio";
+		        var prefix = "levels/l" + level;
+		        var topLeftSrc = prefix + "TL.png";
+		        var topRightSrc = prefix + "TR.png";
+		        var bottomLeftSrc = prefix + "BL.png";
+		        var bottomRightSrc = prefix + "BR.png";
+		        var audioSrc = prefix + "audio.ogg";
 		        
 		        $("#topLeftImage").attr("src", topLeftSrc);
 		        $("#topRightImage").attr("src", topRightSrc);
 		        $("#bottomLeftImage").attr("src", bottomLeftSrc);
 		        $("#bottomRightImage").attr("src", bottomRightSrc);
 		        
-		        $("#rosettaText").html(text[level]);
+		        document.getElementById("currentAudioSource").src = audioSrc;
+		        document.getElementById("currentAudio").pause();
+		        document.getElementById("currentAudio").load();
+		        document.getElementById("currentAudio").play();
+		        
+		        $("#rosettaText").html(text[level][0]);
+		        
+		        var correctChoice = text[level][1]; // Can be "tl", "tr", "bl", "br"
 		        
 		        var nextLevel = parseInt(level, 10) + 1;
 		        var url = window.location.host + window.location.pathname;
 		        $("#nextLevelLink").attr("href","index.html?level=" + nextLevel);
+		        
+		        $("#replayButton").click(function() {
+		        	replay();
+		        });
+		        
+		        var check = function(choice) {
+		        	if (choice == correctChoice) {
+		        		var song = document.getElementById("correctSound");
+		        		song.addEventListener('ended', function() {
+		        			window.location = "index.html?level=" + nextLevel;
+		        		}, false);
+		        	} else {
+		        		var song = document.getElementById("wrongSound");
+		        	}
+		        	
+		        	var feedbackPic = "";
+		        	if (choice == correctChoice) {
+		        		switch(choice) {
+		        			case "tl":
+		        				feedbackPic = "correctTopLeft";
+		        				break;
+		        			case "tr":
+		        				feedbackPic = "correctTopRight";
+		        				break;
+		        			case "bl":
+		        				feedbackPic = "correctBottomLeft";
+		        				break;
+		        			case "br":
+		        				feedbackPic = "correctBottomRight";
+		        				break;
+		        		}
+		        	} else {
+		        		switch(choice) {
+		        			case "tl":
+		        				feedbackPic = "incorrectTopLeft";
+		        				break;
+		        			case "tr":
+		        				feedbackPic = "incorrectTopRight";
+		        				break;
+		        			case "bl":
+		        				feedbackPic = "incorrectBottomLeft";
+		        				break;
+		        			case "br":
+		        				feedbackPic = "incorrectBottomRight";
+		        				break;
+		        		}
+		        	}
+		        	song.currentTime = 0;
+					song.play();
+					
+					$("#"+feedbackPic).css("visibility","visible");
+		        };
+		        
+		        $("#topLeftImage").click(function() {
+		        	check("tl");
+		        });
+		        $("#topRightImage").click(function() {
+		        	check("tr");
+		        });
+		        $("#bottomLeftImage").click(function() {
+		        	check("bl");
+		        });
+		        $("#bottomRightImage").click(function() {
+		        	check("br");
+		        });
+		        
 			});
     	</script>
 	</head>
 
 	<body>
 		<div>
+			<audio id="currentAudio">
+				<source id="currentAudioSource" src="sounds/wrong.ogg" type="audio/ogg">
+				Audio not supported
+			</audio>
+			<audio id="correctSound">
+				<source src="sounds/correct.ogg" type="audio/ogg">
+			</audio>
+			<audio id="wrongSound">
+				<source src="sounds/wrong.ogg" type="audio/ogg">
+			</audio>
+			<input id="replayButton" type="image" src="pictures/soundButton.png" />
 			<p id="rosettaText">Placeholder</p>
-			<img id="topLeftImage" src="pictures/picturePlaceholder.png" />
-			<img id="topRightImage" src="pictures/picturePlaceholder.png" />
-			<img id="bottomLeftImage" src="pictures/picturePlaceholder.png" />
-			<img id="bottomRightImage" src="pictures/picturePlaceholder.png" />
+			<input id="topLeftImage" type="image" src="pictures/picturePlaceholder.png" />
+			<img id="correctTopLeft" class="feedbackPicture feedbackTopLeft" src="pictures/greenCheck.jpg"/>
+			<img id="incorrectTopLeft" class="feedbackPicture feedbackTopLeft" src="pictures/redX.jpg"/>
+			<input id="topRightImage" type="image" src="pictures/picturePlaceholder.png" />
+			<img id="correctTopRight" class="feedbackPicture feedbackTopRight" src="pictures/greenCheck.jpg"/>
+			<img id="incorrectTopRight" class="feedbackPicture feedbackTopRight" src="pictures/redX.jpg"/>
+			<input id="bottomLeftImage" type="image" src="pictures/picturePlaceholder.png" />
+			<img id="correctBottomLeft" class="feedbackPicture feedbackBottomLeft" src="pictures/greenCheck.jpg"/>
+			<img id="incorrectBottomLeft" class="feedbackPicture feedbackBottomLeft" src="pictures/redX.jpg"/>
+			<input id="bottomRightImage" type="image" src="pictures/picturePlaceholder.png" />
+			<img id="correctBottomRight" class="feedbackPicture feedbackBottomRight" src="pictures/greenCheck.jpg"/>
+			<img id="incorrectBottomRight" class="feedbackPicture feedbackBottomRight" src="pictures/redX.jpg"/>
+			<img id="backgroundImage" src="pictures/2nBGT.png" />
 			<a href="" id="nextLevelLink">Next Lesson</a>
 		</div>
 	</body>

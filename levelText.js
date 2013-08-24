@@ -1,4 +1,4 @@
 var text = {
-	1: "Mink",
-	2: "Brothel"
-}
+	1: ["Whiskey", "tl"],
+	2: ["Brothel", "tr"]
+};
